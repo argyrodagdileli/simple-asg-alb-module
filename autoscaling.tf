@@ -10,7 +10,7 @@ resource "aws_security_group" "web_dmz" {
     protocol        = "tcp"
     security_groups = [aws_security_group.alb.id]
   }
-  
+
   egress {
     from_port        = 0
     to_port          = 0
