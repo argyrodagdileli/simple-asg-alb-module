@@ -52,6 +52,7 @@ resource "aws_autoscaling_attachment" "web_asg_main_alb" {
   autoscaling_group_name = aws_autoscaling_group.web.id
   lb_target_group_arn    = aws_lb_target_group.web.arn
 }
+
 resource "aws_autoscaling_policy" "web_policy_up" {
   name                   = "web_policy_up"
   scaling_adjustment     = 1
@@ -59,13 +60,14 @@ resource "aws_autoscaling_policy" "web_policy_up" {
   cooldown               = 300
   autoscaling_group_name = aws_autoscaling_group.web.name
 }
+
 resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_up" {
   alarm_name          = "web_cpu_alarm_up"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "15"
+  period              = "10"
   statistic           = "Average"
   threshold           = "50"
   dimensions = {
@@ -74,6 +76,7 @@ resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_up" {
   alarm_description = "Monitors the EC2 instance CPU utilization"
   alarm_actions     = ["${aws_autoscaling_policy.web_policy_up.arn}"]
 }
+
 resource "aws_autoscaling_policy" "web_policy_down" {
   name                   = "web_policy_down"
   scaling_adjustment     = -1
@@ -87,7 +90,7 @@ resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_down" {
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "20"
+  period              = "10"
   statistic           = "Average"
   threshold           = "40"
   dimensions = {
