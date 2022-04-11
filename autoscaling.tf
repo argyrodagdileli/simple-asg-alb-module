@@ -65,7 +65,7 @@ resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_up" {
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "120"
+  period              = "15"
   statistic           = "Average"
   threshold           = "50"
   dimensions = {
@@ -87,7 +87,7 @@ resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_down" {
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "120"
+  period              = "20"
   statistic           = "Average"
   threshold           = "40"
   dimensions = {
